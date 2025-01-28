@@ -1,0 +1,13 @@
+python3 main.py \
+        --do_train=true \
+        --do_rank=true \
+        --slideID=0AD4001 \
+        --sigma=0.05 \
+        --noise_type=normal \
+        --architec=ae \
+        --epoch=100 \
+        --zdim=512 \
+        --dapi_coef=0.33 \
+        --tritc_coef=0.33 \
+        --cd45_coef=0.01 \
+        --fitc_coef=0.33
