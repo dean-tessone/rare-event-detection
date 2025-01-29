@@ -45,6 +45,6 @@ Run the script with `do_rank=True` to rank tiles based on reconstruction errors.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
 
 
