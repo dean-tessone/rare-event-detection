@@ -4,11 +4,9 @@ This repository provides a pipeline for detecting rare cells in microscopy slide
 
 ## Requirements
 
-- Python 3.8+
-- TensorFlow 2.x
-- NumPy
-- Matplotlib
-- Other dependencies specified in `requirements.txt`
+- Python 3.9.16
+- TensorFlow 2.4.1
+- The conda environment used is shown in: `environment.yml`
 
 ## Features
 

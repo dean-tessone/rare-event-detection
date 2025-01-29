@@ -10,4 +10,6 @@ python3 main.py \
         --dapi_coef=0.33 \
         --tritc_coef=0.33 \
         --cd45_coef=0.01 \
-        --fitc_coef=0.33
+        --fitc_coef=0.33 \
+        --savedir=exps/ \
+        --slide_directory=slides/

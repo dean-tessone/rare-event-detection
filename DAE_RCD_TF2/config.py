@@ -82,5 +82,18 @@ def cla():
         required=True,
         help=textwrap.dedent("""Coefficient of the FITC channel for ranking"""),
     )
+    parser.add_argument(
+        "--savedir",
+        type=str,
+        required=True,
+        help=textwrap.dedent("""Directory to save model and results"""),
+    )
+
+    parser.add_argument(
+        "--slide_directory",
+        type=str,
+        required=True,
+        help=textwrap.dedent("""Directory where slides are saved"""),
+    )
 
     return parser.parse_args()
