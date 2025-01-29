@@ -7,7 +7,8 @@ from config import cla
 from DAE_trainer import train_DAE
 from readprocess_tiles import create_tile_dataset
 from filtering_slides.filter_slides import filter_slides
-from utils import decompress_directory, remove_directory, l2distance
+from utils import decompress_directory, remove_directory
+from rarity_metric import reconstruction_error_calc
 
 PARAMS = cla()
 
@@ -79,63 +80,23 @@ if do_rank:
     dae_model = DAE(arch_type, latent_dim=z_dim)
     dae_model.load(savedir_model, epoch=PARAMS.epoch)
 
-    total_l2_distances = []
-    total_l2_distances_per_channel = []
-
-    batch_size = 5000
-
-    ### CHECK WHETHER NUMPY ORDERS ACORDING TO ONE COLUMN
-
-    for i in range(n_samples // batch_size + 1):  # n_samples):
-        batch_curr = (
-            samples[batch_size * i : (i + 1) * batch_size].astype(np.float32) / 255.0
-        )
-        reconstruction = dae_model.reconstruct(batch_curr)
-        l2_distances1 = l2distance(
-            batch_curr[:, :, :, 0:1], reconstruction[:, :, :, 0:1]
-        )
-        l2_distances2 = l2distance(
-            batch_curr[:, :, :, 1:2], reconstruction[:, :, :, 1:2]
-        )
-        l2_distances3 = l2distance(
-            batch_curr[:, :, :, 2:3], reconstruction[:, :, :, 2:3]
-        )
-        l2_distances4 = l2distance(
-            batch_curr[:, :, :, 3:4], reconstruction[:, :, :, 3:4]
-        )
-
-        l2_distances = np.reshape(
-            l2_distances1 * dapi_coef
-            + l2_distances2 * tritc_coef
-            + l2_distances3 * cd45_coef
-            + l2_distances4 * fitc_coef,
-            newshape=(len(l2_distances1), 1),
-        )
-
-        total_l2_distances.append(l2_distances)
-        total_l2_distances_per_channel.append(
-            np.concatenate(
-                [
-                    l2_distances1.reshape(-1, 1),
-                    l2_distances2.reshape(-1, 1),
-                    l2_distances3.reshape(-1, 1),
-                    l2_distances4.reshape(-1, 1),
-                ],
-                axis=1,
-            )
-        )
+    total_l2_distances, l2_distances = reconstruction_error_calc(
+        dae_model,
+        samples,
+        n_samples,
+        batch_size,
+        dapi_coef,
+        tritc_coef,
+        cd45_coef,
+        fitc_coef,
+    )
 
     i_range = np.reshape(np.arange(0, n_samples), newshape=(n_samples, 1))
-    total_l2_distances = np.concatenate(total_l2_distances, axis=0)
-    l2_distances = np.concatenate(total_l2_distances_per_channel, axis=0)
-
     results_table_np = np.concatenate([i_range, total_l2_distances], axis=1)
 
     sorted_idxs_unfiltered = np.flip(results_table_np[:, 1].argsort())
     results_table_np_unfiltered = results_table_np[sorted_idxs_unfiltered]
-    indices_sorted_unfiltered = results_table_np_unfiltered[
-        :, 0
-    ]  # Extracting just the indices from results_table_np
+    indices_sorted_unfiltered = results_table_np_unfiltered[:, 0]
 
     idxs_to_filter = filter_slides(
         indices_sorted_unfiltered,
