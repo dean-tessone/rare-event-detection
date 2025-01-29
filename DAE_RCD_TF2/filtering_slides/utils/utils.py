@@ -1,3 +1,6 @@
+# Copyright (c) 2024 University of Southern California
+# Licensed under the MIT License (see LICENSE file for details)
+
 import logging
 import cv2
 import sys

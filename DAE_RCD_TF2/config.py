@@ -1,3 +1,6 @@
+# Copyright (c) 2024 University of Southern California
+# Licensed under the MIT License (see LICENSE file for details)
+
 import argparse, textwrap
 
 formatter = lambda prog: argparse.HelpFormatter(prog, max_help_position=50)
@@ -29,13 +32,14 @@ def cla():
     parser.add_argument(
         "--sigma",
         type=float,
-        required=True,
+        default=0.05,
         help=textwrap.dedent("""Standard deviation of the added Gaussian noise"""),
     )
     parser.add_argument(
         "--architec",
         type=str,
-        required=True,
+        default="ae",
+        required=False,
         help=textwrap.dedent("""Defines network architecture"""),
     )
     parser.add_argument(
@@ -55,7 +59,8 @@ def cla():
     parser.add_argument(
         "--noise_type",
         type=str,
-        required=True,
+        default="normal",
+        required=False,
         help=textwrap.dedent("""Noise type to denoise"""),
     )
     parser.add_argument(

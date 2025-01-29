@@ -1,3 +1,6 @@
+# Copyright (c) 2024 University of Southern California
+# Licensed under the MIT License (see LICENSE file for details)
+
 from skimage import measure, color
 import pandas as pd
 import numpy as np
