@@ -12,7 +12,7 @@ from DAE_trainer import train_DAE
 from readprocess_tiles import create_tile_dataset
 from filtering_slides.filter_slides import filter_slides
 from utils import decompress_directory, remove_directory
-from DAE_RCD_TF2.rarity_metric import reconstruction_error_calc
+from rarity_metric import reconstruction_error_calc
 
 
 def main():
