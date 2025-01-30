@@ -9,13 +9,23 @@ import tarfile
 import os
 import shutil
 
-np.random.seed(1008)
-z_dim = 100
-prior_weight = 1
-dist_weight = 5
 
+def save_loss(loss, loss_name, savedir, n_epoch, plotting=False):
 
-# ============== Parameters ======================
+    np.savetxt(f"{savedir}/{loss_name}.txt", loss)
+    if plotting:
+        fig, ax1 = plt.subplots()
+        ax1.plot(loss)
+        ax1.set_xlabel("Steps")
+        ax1.set_ylabel(loss_name)
+        ax1.set_xlim([1, len(loss)])
+
+        ax2 = ax1.twiny()
+        ax2.set_xlim([0, n_epoch])
+        ax2.set_xlabel("Epochs")
+        plt.tight_layout()
+        plt.savefig(f"{savedir}/{loss_name}.png", dpi=200)
+        plt.close()
 
 
 def filter_regionally(results_table_np):
@@ -62,6 +72,44 @@ def filter_regionally(results_table_np):
             idxs_list.append(i)
 
     return idxs_list, region_excl_list
+
+
+def make_plots_training(synthetic_images, n_rows, savedir, i, type_im="synth"):
+
+    fig1, axs1 = plt.subplots(n_rows, 5, dpi=200, figsize=(20, int(4.4 * n_rows)))
+    max_value = np.amax(synthetic_images)
+    for idx in range(n_rows):
+        combined_channels = [
+            synthetic_images[idx, :, :, 1:2] + synthetic_images[idx, :, :, 3:4],
+            synthetic_images[idx, :, :, 2:3] + synthetic_images[idx, :, :, 3:4],
+            synthetic_images[idx, :, :, 0:1] + synthetic_images[idx, :, :, 3:4],
+        ]
+        synthetic_RGB_image = np.concatenate(combined_channels, axis=2)
+        axs1[idx, 0].imshow(synthetic_RGB_image / 2, vmin=0, vmax=1)
+        axs1[idx, 1].imshow(synthetic_images[idx, :, :, 0], cmap="gray", vmin=0, vmax=1)
+        axs1[idx, 2].imshow(synthetic_images[idx, :, :, 1], cmap="gray", vmin=0, vmax=1)
+        axs1[idx, 3].imshow(synthetic_images[idx, :, :, 2], cmap="gray", vmin=0, vmax=1)
+        axs1[idx, 4].imshow(synthetic_images[idx, :, :, 3], cmap="gray", vmin=0, vmax=1)
+        axs1[idx, 0].set_xticks([])
+        axs1[idx, 0].set_yticks([])
+        axs1[idx, 1].set_xticks([])
+        axs1[idx, 1].set_yticks([])
+        axs1[idx, 2].set_xticks([])
+        axs1[idx, 2].set_yticks([])
+        axs1[idx, 3].set_xticks([])
+        axs1[idx, 3].set_yticks([])
+        axs1[idx, 4].set_xticks([])
+        axs1[idx, 4].set_yticks([])
+        if idx == 0:
+            axs1[idx, 1].set_title("DAPI", fontsize=24)
+            axs1[idx, 2].set_title("TRITC", fontsize=24)
+            axs1[idx, 3].set_title("CY5", fontsize=24)
+            axs1[idx, 4].set_title("FITC", fontsize=24)
+
+    fig1.tight_layout()
+    fig1.subplots_adjust(wspace=0.0)
+    fig1.savefig(f"{savedir}/{type_im}_sample_stats_{i+1}.png")
+    plt.close("all")
 
 
 def plot_grid(tiles, savedir, label, ntiles=500):

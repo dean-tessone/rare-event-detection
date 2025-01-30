@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 from config import cla
 from models import DAE
-from utils import save_loss, make_plots_GAN_training, GaussianCorrNoise
+from utils import save_loss, make_plots_training
 
 # === Setting up training step with tf.function ===
 
@@ -71,8 +71,8 @@ def train_DAE(train_data, savedir):
 
     if noise_type == "normal":
         noise_gen = tf.random.normal
-    elif noise_type == "gaussian_cor":
-        noise_gen = GaussianCorrNoise()
+    else:
+        raise ValueError("Noise type not recognized")
 
     # ============ Training ==================
     print("\n --- Starting training \n")
@@ -114,12 +114,10 @@ def train_DAE(train_data, savedir):
 
             x_reconstructed = dae_model.reconstruct(xnoisy[0:5, :, :, :])
 
-            make_plots_GAN_training(
+            make_plots_training(
                 x_reconstructed, n_out, savedir, i, type_im="synth_reconstruction"
             )
-            make_plots_GAN_training(
-                xnoisy[0:5, :, :, :], n_out, savedir, i, type_im="true"
-            )
+            make_plots_training(xnoisy[0:5, :, :, :], n_out, savedir, i, type_im="true")
 
             dae_model.save(savedir, epoch=i + 1)
 
