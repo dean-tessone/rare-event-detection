@@ -69,4 +69,6 @@ def reconstruction_error_calc(
             )
         )
 
-        return total_l2_distances, total_l2_distances_per_channel
+    return np.concatenate(total_l2_distances, axis=0), np.concatenate(
+        total_l2_distances_per_channel, axis=0
+    )

@@ -52,8 +52,8 @@ def main():
         + f"tritc_{int(100*tritc_coef)}_cd45_{int(100*cd45_coef)}_"
         + f"fitc_{int(100*fitc_coef)}_v2_{PARAMS.epoch}"
     )
-    savedir_model = savedir + experiment_name_model + f"/{target_slide}"
-    savedir_rank = savedir + experiment_name_rank + f"/{target_slide}"
+    savedir_model = savedir + "/" + experiment_name_model + f"/{target_slide}"
+    savedir_rank = savedir + "/" + experiment_name_rank + f"/{target_slide}"
 
     if not os.path.exists(savedir_model + f"/model_{PARAMS.epoch}"):
         do_train = True
