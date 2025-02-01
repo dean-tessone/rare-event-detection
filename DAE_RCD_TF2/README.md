@@ -43,6 +43,10 @@ Run the script with `do_train=True` to train the DAE model. Trained models will 
 ### 4. Rank and Filter Tiles
 Run the script with `do_rank=True` to rank tiles based on reconstruction errors. This step identifies rare tiles in the dataset based on their reconstruction error values. Results, including ranked tiles and filtered tiles, are saved in the output directory.
 
+## Acknowledgements
+
+I would like to acknowledg Amin Naghdloo for the methods he implemented [slide-image-utils](https://github.com/aminnaghdloo/slide-image-utils) repository, some of which are included here.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
