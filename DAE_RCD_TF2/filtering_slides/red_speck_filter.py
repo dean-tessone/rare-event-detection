@@ -33,7 +33,7 @@ def frameid_and_coords_from_tile_idx(tile_idx, list_frames):
 
 def run_detection_threshold(slideID, slides_dir, savedir):
 
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    base_dir = os.path.dirname(__file__)
 
     command = [
         "python3",
