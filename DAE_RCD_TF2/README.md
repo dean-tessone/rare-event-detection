@@ -45,7 +45,7 @@ Run the script with `do_rank=True` to rank tiles based on reconstruction errors.
 
 ## Acknowledgements
 
-I would like to acknowledg Amin Naghdloo for the methods he implemented [slide-image-utils](https://github.com/aminnaghdloo/slide-image-utils) repository, some of which are included here.
+I would like to acknowledg Amin Naghdloo for the methods he implemented in the [slide-image-utils](https://github.com/aminnaghdloo/slide-image-utils) repository, some of which are included here.
 
 ## License
 
