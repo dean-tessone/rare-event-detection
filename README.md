@@ -2,6 +2,8 @@
 
 This repository includes implementations of deep learning methods for rare event detection. The focus is on liquid biopsy assays but the methods can be applied to many other rarity detection tasks. 
 
+There are methods implemented both in PyTorch and Tensorflow.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
