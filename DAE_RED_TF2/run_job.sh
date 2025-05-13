@@ -5,7 +5,7 @@ python3 main.py \
         --sigma=0.05 \
         --noise_type=normal \
         --architec=ae \
-        --epoch=100 \
+        --epoch=1 \
         --zdim=512 \
         --dapi_coef=0.33 \
         --tritc_coef=0.33 \
